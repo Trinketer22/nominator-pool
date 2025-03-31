@@ -62,27 +62,25 @@ export class NominatorPool implements Contract {
 	static poolConfigToCell(config:NominatorConf) {
 
 		const confCell = beginCell().storeUint(buff2bigint(config.validatorAddress.hash), 256)
-																	.storeUint(config.rewardShare, 16)
-																	.storeUint(config.maxNominatorCount, 16)
-																	.storeCoins(config.minValidatorStake)
-																	.storeCoins(config.minNominatorStake)
-											.endCell();
-			
-		return beginCell()
-						.storeUint(0, 8)
-						.storeUint(0, 16)
-						.storeCoins(0)
-						.storeCoins(0)
-						.storeRef(confCell)
-						.storeDict(null)
-						.storeDict(null)
-						.storeUint(0, 32)
-						.storeUint(0, 256)
-						.storeUint(0, 8)
-						.storeUint(0, 32)
-						.storeUint(0, 32)
-						.storeDict(null)
-					.endCell();
+.storeUint(config.rewardShare, 16)
+.storeUint(config.maxNominatorCount, 16)
+.storeCoins(config.minValidatorStake)
+.storeCoins(config.minNominatorStake)
+.endCell();
+		return beginCell().storeUint(0, 8)
+                                  .storeUint(0, 16)
+				  .storeCoins(0)
+				  .storeCoins(0)
+				  .storeRef(confCell)
+				  .storeDict(null)
+				  .storeDict(null)
+				  .storeUint(0, 32)
+				  .storeUint(0, 256)
+                                  .storeUint(0, 8)
+                                  .storeUint(0, 32)
+                                  .storeUint(0, 32)
+                                  .storeDict(null)
+	            .endCell();
 	}
 
 	static parsePoolConfig(config:Cell):NominatorConf {
@@ -208,7 +206,7 @@ export class NominatorPool implements Contract {
 
       return  beginCell().storeUint(0x4e73744b, 32)
                          .storeUint(query_id, 64)
-												 .storeCoins(stake_val)
+                         .storeCoins(stake_val)
                          .storeUint(buff2bigint(public_key), 256)
                          .storeUint(stake_at, 32)
                          .storeUint(max_factor, 32)
@@ -220,18 +218,18 @@ export class NominatorPool implements Contract {
 
   async sendNewStake(provider: ContractProvider,
                      via: Sender,
-										 stake_val: bigint,
+                     stake_val: bigint,
                      public_key: Buffer,
                      private_key: Buffer,
                      stake_at: number | bigint,
                      max_factor: number = 1 << 16,
                      adnl_address: bigint = 0n,
                      query_id:bigint | number = 1,
-										 value: bigint = toNano('1')) {
+                    value: bigint = toNano('1')) {
       await provider.internal(via,{
           value, 
           body: NominatorPool.newStakeMessage(stake_val,
-																							this.address,
+                                              this.address,
                                               public_key,
                                               private_key,
                                               stake_at,
@@ -256,7 +254,7 @@ export class NominatorPool implements Contract {
 
 	static voteMessage(proposal: bigint | Buffer, vote: boolean) {
 		const action =  vote ? 121 : 110;
-		const prop   = Buffer.from((proposal instanceof Buffer ? proposal : bigint2buff(proposal)).toString('hex'));
+		const prop   = Buffer.from((Buffer.isBuffer(proposal) ? proposal : bigint2buff(proposal)).toString('hex'));
 		return beginCell().storeUint(0, 32).storeUint(action, 8).storeBuffer(prop, 64).endCell();
 	}
 
@@ -352,7 +350,7 @@ export class NominatorPool implements Contract {
 
 
 	async getVoters(provider: ContractProvider, vote: Buffer | bigint) {
-		const voteHash = vote instanceof Buffer ? buff2bigint(vote) : vote;
+		const voteHash = Buffer.isBuffer(vote) ? buff2bigint(vote) : vote;
 		const res      = await provider.get('list_voters', [{type:"int", value:voteHash}]);
 		return new LispList(res.stack.readTuple(), Voter).toArray();
 	}

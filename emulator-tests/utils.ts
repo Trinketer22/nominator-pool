@@ -171,8 +171,8 @@ const buff2bigint = (buff: Buffer) : bigint => {
     return BigInt("0x" + buff.toString("hex"));
 }
 
-export const bigint2buff = (num:bigint) : Buffer => {
-    return Buffer.from(num.toString(16), 'hex')
+export const bigint2buff = (num:bigint, pad: number = 64) : Buffer => {
+    return Buffer.from(num.toString(16).padStart(pad, '0'), 'hex')
 }
 
 /*
@@ -244,7 +244,7 @@ export const computedGeneric = (trans:Transaction) => {
 
 export const getMsgExcess = (trans:Transaction, msg:Message, value:bigint, msgConf:MsgPrices) => {
   const fwdFees = computeMessageForwardFees(msgConf, msg);
-  return value - computedGeneric(trans).gasFees - fwdFees.remaining - fwdFees.fees;
+  return value - computedGeneric(trans).gasFees - fwdFees.fees.total
 }
 
 export {

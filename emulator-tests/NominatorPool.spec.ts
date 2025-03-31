@@ -572,7 +572,7 @@ describe ('Nominator pool', () => {
     expect(res.transactions).toHaveTransaction({
       from: pool.address,
       to: nmAddr,
-      value: expDepo - msgFees.fees - msgFees.remaining,
+      value: expDepo - msgFees.fees.total
     });
 
     const excess  = getMsgExcess(targetTrans, excessMsg, msgVal, msgConf);
@@ -704,7 +704,7 @@ describe ('Nominator pool', () => {
     expect(res.transactions).toHaveTransaction({
       from: pool.address,
       to: validator.address,
-      value: req - msgFees.fees - msgFees.remaining
+      value: req - msgFees.fees.total
     });
 
     expect(res.transactions).toHaveTransaction({
@@ -1267,7 +1267,7 @@ describe ('Nominator pool', () => {
       const wInfo    = withdraws.find(x => x.hash == addrHash)!;
       expect(wInfo).not.toBeUndefined();
       const fwdFee  = computeMessageForwardFees(msgConf, msg);
-      expect((msg.info as CommonMessageInfoInternal).value.coins).toEqual(wInfo.balance - fwdFee.fees - fwdFee.remaining);
+      expect((msg.info as CommonMessageInfoInternal).value.coins).toEqual(wInfo.balance - fwdFee.fees.total);
     }
   });
 
@@ -1329,7 +1329,7 @@ describe ('Nominator pool', () => {
     expect(res.transactions).toHaveTransaction({
       from: pool.address,
       to: nmUser.address,
-      value: reqBalance - fwdFee.fees - fwdFee.remaining
+      value: reqBalance - fwdFee.fees.total
     });
     const poolAfter = await pool.getPoolData()
     expect(poolAfter.nmCount).toEqual(poolBefore.nmCount - 1);
