@@ -1,7 +1,5 @@
-import { SendMessageResult, Blockchain, SandboxContract } from "@ton-community/sandbox";
-import { Address, Slice, toNano, Cell, beginCell, contractAddress } from "ton";
-import { OpenedContract } from "ton-core";
-import { randomAddress, LispList, NominatorDesc } from "./utils";
+import { SendMessageResult, Blockchain, SandboxContract } from "@ton/sandbox";
+import { NominatorDesc } from "./utils";
 import { NominatorPool } from "./wrappers/NominatorPool";
 
 const testNominatorList = async (pool: SandboxContract<NominatorPool>, nmList: NominatorDesc[], strict:boolean = false) => {

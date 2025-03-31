@@ -1,6 +1,4 @@
-import { Address, beginCell, Cell, Slice, Contract, contractAddress, ContractProvider, Dictionary, DictionaryValue, Sender, toNano, TupleReader, Tuple, TupleItem, TupleItemInt, SendMode, ContractState } from "ton-core";
-import { SendMessageResult } from "@ton-community/sandbox";
-import { compile } from "@ton-community/blueprint";
+import { Address, beginCell, Cell, Slice, Contract, contractAddress, ContractProvider, Dictionary, DictionaryValue, Sender, toNano, TupleReader, Tuple, TupleItem, TupleItemInt, SendMode, ContractState } from "@ton/core";
 import { buff2bigint, bigint2buff, LispList, NominatorDesc, VoteDesc, Voter } from "../utils";
 import { signData } from "./ValidatorUtils";
 

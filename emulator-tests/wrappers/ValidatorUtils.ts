@@ -1,5 +1,5 @@
-import {Cell, beginCell, Dictionary, Slice, DictionaryValue } from 'ton-core';
-import {sign} from 'ton-crypto';
+import {Cell, beginCell, Dictionary, Slice, DictionaryValue } from '@ton/core';
+import {sign} from '@ton/crypto';
 import { bigint2buff} from '../utils';
 
 type ConfigDict = Dictionary<number, Cell>;

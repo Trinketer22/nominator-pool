@@ -1,21 +1,18 @@
-import { Address, toNano, Cell, beginCell, contractAddress, ContractProvider, OpenedContract, TonClient4} from "ton";
-import { compile } from "@ton-community/blueprint";
-import { SendMessageResult, Blockchain, SmartContract, BlockchainSender, BlockchainContractProvider, SandboxContract, TreasuryContract, internal, createShardAccount, BlockchainSnapshot} from "@ton-community/sandbox";
-import { Message, CommonMessageInfoInternal, ShardAccount, Sender, Transaction, Dictionary } from "ton-core";
+import { Address, toNano, Cell, beginCell } from "@ton/core";
+import { compile } from "@ton/blueprint";
+import { SendMessageResult, Blockchain, SandboxContract, TreasuryContract, internal, createShardAccount, BlockchainSnapshot} from "@ton/sandbox";
+import { Message, CommonMessageInfoInternal, Sender } from "@ton/core";
 import { NominatorPool, NominatorConf } from "./wrappers/NominatorPool";
 import { getRandom, randomAddress, differentAddress, LispList, buff2bigint, NominatorDesc, getRandomTon, getRandomInt, computedGeneric, getMsgExcess } from "./utils";
-import { getMsgPrices, computeMessageForwardFees} from "./fees";
+import { getMsgPrices, computeMessageForwardFees} from "./gasUtils";
 import { testNominatorList } from "./TestWraps";
 import * as errCode from './NominatorExceptions';
-import "@ton-community/test-utils";
+import "@ton/test-utils";
 import { ElectorTest } from "./wrappers/ElectorTest";
 import { ConfigTest  } from "./wrappers/ConfigTest";
-import { keyPairFromSeed, getSecureRandomBytes, getSecureRandomWords, KeyPair } from 'ton-crypto';
+import { keyPairFromSeed, getSecureRandomBytes, getSecureRandomWords, KeyPair } from '@ton/crypto';
 import { getStakeConf, getValidatorsConf, loadConfig, packStakeConf, packElectionsConf, packValidatorsConf, getVset, getElectionsConf, packValidatorsSet } from "./wrappers/ValidatorUtils";
-import { flattenTransaction } from "@ton-community/test-utils";
-import { Maybe } from "ton-core/dist/utils/maybe";
 import { bigint2buff } from "./utils";
-import { Elector } from "./wrappers/Elector";
 
 type Validator = {
   wallet: SandboxContract<TreasuryContract>,

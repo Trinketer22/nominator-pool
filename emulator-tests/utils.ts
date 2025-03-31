@@ -1,8 +1,6 @@
-import { Address, Tuple, TupleItem, TupleItemInt, TupleReader, toNano } from "ton";
-import { Cell, Slice, Sender, SenderArguments, ContractProvider, Message, beginCell, Dictionary, MessageRelaxed, Transaction } from "ton-core";
-import { Blockchain } from "@ton-community/sandbox";
-import { NominatorConf, NominatorPool } from "./wrappers/NominatorPool";
-import { computeMessageForwardFees, MsgPrices } from "./fees";
+import { Address, TupleItem, TupleReader, toNano } from "@ton/ton";
+import { Slice, Message, Transaction } from "@ton/core";
+import { computeMessageForwardFees, MsgPrices } from "./gasUtils";
 
 
 const randomAddress = (wc: number = 0) => {
